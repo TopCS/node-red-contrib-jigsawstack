@@ -1,5 +1,5 @@
 {
-  "name": "@jigsawstack/node-red-contrib-jigsawstack",
+  "name": "@topcs/node-red-contrib-jigsawstack",
   "version": "0.0.1",
   "description": "A Node-RED node for JigsawStack API",
   "keywords": [
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/JigsawStack/node-red-jigsawstack.git"
+    "url": "https://github.com/topcs/node-red-jigsawstack.git"
   },
   "node-red": {
     "version": ">=3.0.0",
