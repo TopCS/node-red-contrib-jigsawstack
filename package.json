@@ -1,6 +1,6 @@
 {
   "name": "@topcs/node-red-contrib-jigsawstack",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A Node-RED node for JigsawStack API",
   "keywords": [
     "node-red",
