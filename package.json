@@ -1,0 +1,52 @@
+{
+  "name": "@jigsawstack/node-red-contrib-jigsawstack",
+  "version": "0.0.1",
+  "description": "A Node-RED node for JigsawStack API",
+  "keywords": [
+    "node-red",
+    "jigsawstack"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Andrea Batazzi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JigsawStack/node-red-jigsawstack.git"
+  },
+  "node-red": {
+    "version": ">=3.0.0",
+    "nodes": {
+      "jigsawstack-config": "jigsawstack-config.js",
+      "jigsawstack-summary": "summary.js",
+      "jigsawstack-sentiment": "sentiment.js",
+      "jigsawstack-image": "image.js",
+      "jigsawstack-embedding": "embedding.js",
+      "jigsawstack-text-to-sql": "text-to-sql.js",
+      "jigsawstack-speech-to-text": "speech-to-text.js",
+      "jigsawstack-text-to-speech": "text-to-speech.js",
+      "jigsawstack-translate-text": "translate-text.js",
+      "jigsawstack-translate-image": "translate-image.js",
+      "jigsawstack-nsfw": "nsfw.js",
+      "jigsawstack-profanity": "profanity.js",
+      "jigsawstack-spam": "spam.js",
+      "jigsawstack-spell": "spell.js",
+      "jigsawstack-object-detection": "object-detection.js",
+      "jigsawstack-vocr": "vocr.js",
+      "jigsawstack-web-search": "web-search.js",
+      "jigsawstack-web-suggestion": "web-suggestion.js",
+      "jigsawstack-html-to-any": "html-to-any.js",
+      "jigsawstack-ai-scrape": "ai-scrape.js"
+    }
+  },
+  "dependencies": {
+    "jigsawstack": "^0.2.12"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "prettier": "^3.5.3"
+  }
+}

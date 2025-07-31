@@ -1,0 +1,122 @@
+<!--
+  Copyright JS Foundation and other contributors, http://js.foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/html" data-template-name="jigsawstack-html-to-any">
+    <div class="form-row">
+        <label for="node-input-jigsawstackConfig"><i class="fa fa-cog"></i> JigsawStack Config</label>
+        <input type="text" id="node-input-jigsawstackConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-html"><i class="fa fa-file-code-o"></i> HTML</label>
+        <textarea id="node-input-html" rows="5" style="width:100%" placeholder="Enter HTML content or provide in msg.payload.html"></textarea>
+    </div>
+    <div class="form-row">
+        <label for="node-input-url"><i class="fa fa-globe"></i> URL</label>
+        <input type="text" id="node-input-url" placeholder="Enter URL of webpage to convert or provide in msg.payload.url">
+    </div>
+    <div class="form-row">
+        <label for="node-input-type"><i class="fa fa-tasks"></i> Type</label>
+        <select id="node-input-type">
+            <option value="pdf">PDF</option>
+            <option value="png">PNG</option>
+            <option value="jpeg">JPEG</option>
+            <option value="webp">WEBP</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
+        <input type="number" id="node-input-width" placeholder="e.g. 1920">
+    </div>
+    <div class="form-row">
+        <label for="node-input-height"><i class="fa fa-arrows-v"></i> Height</label>
+        <input type="number" id="node-input-height" placeholder="e.g. 1080">
+    </div>
+    <div class="form-row">
+        <label for="node-input-full_page"><i class="fa fa-file-image-o"></i> Full Page</label>
+        <input type="checkbox" id="node-input-full_page" style="width:auto;">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="jigsawstack-html-to-any">
+    <p>Converts HTML content or a URL to a PDF, PNG, JPEG, or WEBP file.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt class="optional">html
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The HTML content to convert. Can be overridden by <code>msg.payload.html</code>.</dd>
+        <dt class="optional">url
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The URL of a webpage to convert. Can be overridden by <code>msg.payload.url</code>.</dd>
+        <dt>type
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The output format. One of 'pdf', 'png', 'jpeg', 'webp'. Can be overridden by <code>msg.payload.type</code>.</dd>
+        <dt class="optional">width
+            <span class="property-type">number</span>
+        </dt>
+        <dd> The width of the output in pixels. Can be overridden by <code>msg.payload.width</code>.</dd>
+        <dt class="optional">height
+            <span class="property-type">number</span>
+        </dt>
+        <dd> The height of the output in pixels. Can be overridden by <code>msg.payload.height</code>.</dd>
+        <dt class="optional">full_page
+            <span class="property-type">boolean</span>
+        </dt>
+        <dd> Whether to capture the full page. Can be overridden by <code>msg.payload.full_page</code>.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">object</span>
+        </dt>
+        <dd>The result from the HTML to Any API. This will contain the converted file data.</dd>
+    </dl>
+
+    <h3>Details</h3>
+    <p>This node uses the JigsawStack HTML to Any API to convert HTML to various formats. You must provide either HTML content or a URL. The output type can be configured in the node or provided in the message.</p>
+    <p>For more details on the API, see the <a href="https://jigsawstack.com/docs/web/html-to-any" target="_blank">JigsawStack HTML to Any documentation</a>.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('jigsawstack-html-to-any',{
+        category: 'Jigsaw',
+        color: '#F53E34',
+        defaults: {
+            name: {value:""},
+            jigsawstackConfig: {type:"jigsawstack-config", required:true},
+            html: {value:""},
+            url: {value:""},
+            type: {value:"pdf"},
+            width: {value:1920},
+            height: {value:1080},
+            full_page: {value:false}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "images/jigsawstack.svg",
+        label: function() {
+            return this.name||"html-to-any";
+        }
+    });
+</script>

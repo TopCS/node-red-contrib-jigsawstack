@@ -1,0 +1,72 @@
+<!--
+  Copyright JS Foundation and other contributors, http://js.foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/html" data-template-name="jigsawstack-web-suggestion">
+    <div class="form-row">
+        <label for="node-input-jigsawstackConfig"><i class="fa fa-cog"></i> JigsawStack Config</label>
+        <input type="text" id="node-input-jigsawstackConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-query"><i class="fa fa-search"></i> Query</label>
+        <input type="text" id="node-input-query" placeholder="Enter search query or provide in msg.payload.query">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="jigsawstack-web-suggestion">
+    <p>Gets search suggestions for a given query.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>query
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The search query to get suggestions for. Can be overridden by <code>msg.payload.query</code>.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">object</span>
+        </dt>
+        <dd>The result from the Web Suggestion API. This will contain a list of search suggestions.</dd>
+    </dl>
+
+    <h3>Details</h3>
+    <p>This node uses the JigsawStack Web Suggestion API to fetch search suggestions. You must provide a query.</p>
+    <p>For more details on the API, see the <a href="https://jigsawstack.com/docs/web/search-suggestions" target="_blank">JigsawStack Web Suggestion documentation</a>.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('jigsawstack-web-suggestion',{
+        category: 'Jigsaw',
+        color: '#F53E34',
+        defaults: {
+            name: {value:""},
+            jigsawstackConfig: {type:"jigsawstack-config", required:true},
+            query: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "images/jigsawstack.svg",
+        label: function() {
+            return this.name||"web-suggestion";
+        }
+    });
+</script>

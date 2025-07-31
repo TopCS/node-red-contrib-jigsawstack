@@ -1,0 +1,94 @@
+<!--
+  Copyright JS Foundation and other contributors, http://js.foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/html" data-template-name="jigsawstack-text-to-sql">
+    <div class="form-row">
+        <label for="node-input-jigsawstackConfig"><i class="fa fa-cog"></i> JigsawStack Config</label>
+        <input type="text" id="node-input-jigsawstackConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-prompt"><i class="fa fa-comment-o"></i> Prompt</label>
+        <textarea id="node-input-prompt" rows="5" style="width:100%" placeholder="Enter a prompt for the SQL query or provide in msg.payload.prompt"></textarea>
+    </div>
+    <div class="form-row">
+        <label for="node-input-sql_schema"><i class="fa fa-database"></i> SQL Schema</label>
+        <textarea id="node-input-sql_schema" rows="5" style="width:100%" placeholder="Enter the SQL schema or provide in msg.payload.sql_schema"></textarea>
+    </div>
+    <div class="form-row">
+        <label for="node-input-database"><i class="fa fa-tasks"></i> Database</label>
+        <select id="node-input-database">
+            <option value="postgresql">PostgreSQL</option>
+            <option value="mysql">MySQL</option>
+            <option value="sqlite">SQLite</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('jigsawstack-text-to-sql',{
+        category: 'Jigsaw',
+        color: '#F53E34',
+        defaults: {
+            name: {value:""},
+            jigsawstackConfig: {type:"jigsawstack-config", required:true},
+            prompt: {value:""},
+            sql_schema: {value:""},
+            database: {value:"postgresql"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "images/jigsawstack.svg",
+        label: function() {
+            return this.name||"text-to-sql";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-help-name="jigsawstack-text-to-sql">
+    <p>Converts natural language text into a SQL query.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>prompt
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The natural language prompt for the SQL query. Can be overridden by <code>msg.payload.prompt</code>.</dd>
+        <dt class="optional">sql_schema
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The SQL schema of the database. Can be overridden by <code>msg.payload.sql_schema</code>.</dd>
+        <dt>database
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The type of database. One of 'postgresql', 'mysql', 'sqlite'. Can be overridden by <code>msg.payload.database</code>.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">object</span>
+        </dt>
+        <dd>The result from the Text-to-SQL API. This will contain the generated SQL query.</dd>
+    </dl>
+
+    <h3>Details</h3>
+    <p>This node uses the JigsawStack Text-to-SQL API to convert a natural language prompt into a SQL query. You must provide a prompt and optionally a SQL schema.</p>
+    <p>For more details on the API, see the <a href="https://jigsawstack.com/docs/text-to-sql" target="_blank">JigsawStack Text-to-SQL documentation</a>.</p>
+</script>

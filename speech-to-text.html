@@ -1,0 +1,99 @@
+<!--
+  Copyright JS Foundation and other contributors, http://js.foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/html" data-template-name="jigsawstack-speech-to-text">
+    <div class="form-row">
+        <label for="node-input-jigsawstackConfig"><i class="fa fa-cog"></i> JigsawStack Config</label>
+        <input type="text" id="node-input-jigsawstackConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-url"><i class="fa fa-globe"></i> URL</label>
+        <input type="text" id="node-input-url" placeholder="Enter URL of the audio file or provide in msg.payload.url">
+    </div>
+    <div class="form-row">
+        <label for="node-input-language"><i class="fa fa-language"></i> Language</label>
+        <input type="text" id="node-input-language" placeholder="e.g. en, es, fr">
+    </div>
+    <div class="form-row">
+        <label for="node-input-translate"><i class="fa fa-random"></i> Translate</label>
+        <input type="checkbox" id="node-input-translate" style="width:auto;">
+    </div>
+    <div class="form-row">
+        <label for="node-input-by_speaker"><i class="fa fa-users"></i> By Speaker</label>
+        <input type="checkbox" id="node-input-by_speaker" style="width:auto;">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('jigsawstack-speech-to-text',{
+        category: 'Jigsaw',
+        color: '#F53E34',
+        defaults: {
+            name: {value:""},
+            jigsawstackConfig: {type:"jigsawstack-config", required:true},
+            url: {value:""},
+            language: {value:""},
+            translate: {value:false},
+            by_speaker: {value:false}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "images/jigsawstack.svg",
+        label: function() {
+            return this.name||"speech-to-text";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-help-name="jigsawstack-speech-to-text">
+    <p>Transcribes audio from a file into text.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>url
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The URL of the audio file to transcribe. Can be overridden by <code>msg.payload.url</code>.</dd>
+        <dt class="optional">language
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The language of the audio. Can be overridden by <code>msg.payload.language</code>.</dd>
+        <dt class="optional">translate
+            <span class="property-type">boolean</span>
+        </dt>
+        <dd> Whether to translate the transcribed text to English. Can be overridden by <code>msg.payload.translate</code>.</dd>
+        <dt class="optional">by_speaker
+            <span class="property-type">boolean</span>
+        </dt>
+        <dd> Whether to identify speakers in the transcription. Can be overridden by <code>msg.payload.by_speaker</code>.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">object</span>
+        </dt>
+        <dd>The result from the Speech-to-Text API. This will contain the transcribed text.</dd>
+    </dl>
+
+    <h3>Details</h3>
+    <p>This node uses the JigsawStack Speech-to-Text API to transcribe audio. You must provide a URL to an audio file.</p>
+    <p>For more details on the API, see the <a href="https://jigsawstack.com/docs/audio/speech-to-text" target="_blank">JigsawStack Speech-to-Text documentation</a>.</p>
+</script>

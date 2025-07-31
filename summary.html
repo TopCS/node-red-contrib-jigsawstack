@@ -1,0 +1,93 @@
+<!--
+  Copyright JS Foundation and other contributors, http://js.foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/html" data-template-name="jigsawstack-summary">
+    <div class="form-row">
+        <label for="node-input-jigsawstackConfig"><i class="fa fa-cog"></i> JigsawStack Config</label>
+        <input type="text" id="node-input-jigsawstackConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-text"><i class="fa fa-file-text-o"></i> Text</label>
+        <textarea id="node-input-text" rows="5" style="width:100%" placeholder="Enter text to summarize or provide in msg.payload.text"></textarea>
+    </div>
+    <div class="form-row">
+        <label for="node-input-url"><i class="fa fa-globe"></i> URL</label>
+        <input type="text" id="node-input-url" placeholder="Enter URL to summarize or provide in msg.payload.url">
+    </div>
+    <div class="form-row">
+        <label for="node-input-type"><i class="fa fa-tasks"></i> Type</label>
+        <select id="node-input-type">
+            <option value="text">Text</option>
+            <option value="points">Points</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('jigsawstack-summary',{
+        category: 'Jigsaw',
+        color: '#F53E34',
+        defaults: {
+            name: {value:""},
+            jigsawstackConfig: {type:"jigsawstack-config", required:true},
+            text: {value:""},
+            url: {value:""},
+            type: {value:"text"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "images/jigsawstack.svg",
+        label: function() {
+            return this.name||"summary";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-help-name="jigsawstack-summary">
+    <p>Summarizes text from a string or a URL.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt class="optional">text
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The text to summarize. Can be overridden by <code>msg.payload.text</code>.</dd>
+        <dt class="optional">url
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The URL of a webpage to summarize. Can be overridden by <code>msg.payload.url</code>.</dd>
+        <dt>type
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The type of summary to produce. One of 'text' or 'points'. Can be overridden by <code>msg.payload.type</code>.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">object</span>
+        </dt>
+        <dd>The result from the Summarization API. This will contain the summarized text.</dd>
+    </dl>
+
+    <h3>Details</h3>
+    <p>This node uses the JigsawStack Summarization API to create a summary of a text or webpage. You must provide either text or a URL.</p>
+    <p>For more details on the API, see the <a href="https://jigsawstack.com/docs/summary" target="_blank">JigsawStack Summarization documentation</a>.</p>
+</script>

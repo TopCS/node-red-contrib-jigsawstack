@@ -1,0 +1,81 @@
+<!--
+  Copyright JS Foundation and other contributors, http://js.foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/html" data-template-name="jigsawstack-vocr">
+    <div class="form-row">
+        <label for="node-input-jigsawstackConfig"><i class="fa fa-cog"></i> JigsawStack Config</label>
+        <input type="text" id="node-input-jigsawstackConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-prompt"><i class="fa fa-comment-o"></i> Prompt</label>
+        <textarea id="node-input-prompt" rows="5" style="width:100%" placeholder="Enter a prompt for text extraction or provide in msg.payload.prompt"></textarea>
+    </div>
+    <div class="form-row">
+        <label for="node-input-url"><i class="fa fa-globe"></i> URL</label>
+        <input type="text" id="node-input-url" placeholder="Enter URL of the image to process or provide in msg.payload.url">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('jigsawstack-vocr',{
+        category: 'Jigsaw',
+        color: '#F53E34',
+        defaults: {
+            name: {value:""},
+            jigsawstackConfig: {type:"jigsawstack-config", required:true},
+            prompt: {value:""},
+            url: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "images/jigsawstack.svg",
+        label: function() {
+            return this.name||"vocr";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-help-name="jigsawstack-vocr">
+    <p>Extracts text from an image based on a prompt.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>prompt
+            <span class="property-type">string</span>
+        </dt>
+        <dd> A prompt describing what text to extract. Can be overridden by <code>msg.payload.prompt</code>.</dd>
+        <dt>url
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The URL of the image to process. Can be overridden by <code>msg.payload.url</code>.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">object</span>
+        </dt>
+        <dd>The result from the Visual OCR API. This will contain the extracted text.</dd>
+    </dl>
+
+    <h3>Details</h3>
+    <p>This node uses the JigsawStack Visual OCR (vOCR) API to extract text from an image based on a guiding prompt. You must provide a URL to an image and a prompt.</p>
+    <p>For more details on the API, see the <a href="https://jigsawstack.com/docs/vision/vocr" target="_blank">JigsawStack vOCR documentation</a>.</p>
+</script>

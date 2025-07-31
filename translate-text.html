@@ -1,0 +1,90 @@
+<!--
+  Copyright JS Foundation and other contributors, http://js.foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/html" data-template-name="jigsawstack-translate-text">
+    <div class="form-row">
+        <label for="node-input-jigsawstackConfig"><i class="fa fa-cog"></i> JigsawStack Config</label>
+        <input type="text" id="node-input-jigsawstackConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-text"><i class="fa fa-file-text-o"></i> Text</label>
+        <textarea id="node-input-text" rows="5" style="width:100%" placeholder="Enter text to translate or provide in msg.payload.text"></textarea>
+    </div>
+    <div class="form-row">
+        <label for="node-input-target_language"><i class="fa fa-language"></i> Target Language</label>
+        <input type="text" id="node-input-target_language" placeholder="e.g. en, es, fr">
+    </div>
+    <div class="form-row">
+        <label for="node-input-current_language"><i class="fa fa-language"></i> Current Language</label>
+        <input type="text" id="node-input-current_language" placeholder="e.g. en, es, fr (optional)">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('jigsawstack-translate-text',{
+        category: 'Jigsaw',
+        color: '#F53E34',
+        defaults: {
+            name: {value:""},
+            jigsawstackConfig: {type:"jigsawstack-config", required:true},
+            text: {value:""},
+            target_language: {value:"", required:true},
+            current_language: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "images/jigsawstack.svg",
+        label: function() {
+            return this.name||"translate-text";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-help-name="jigsawstack-translate-text">
+    <p>Translates text from one language to another.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>text
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The text to translate. Can be overridden by <code>msg.payload.text</code>.</dd>
+        <dt>target_language
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The language to translate the text to. Can be overridden by <code>msg.payload.target_language</code>.</dd>
+        <dt class="optional">current_language
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The language of the input text. If not provided, it will be auto-detected. Can be overridden by <code>msg.payload.current_language</code>.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">object</span>
+        </dt>
+        <dd>The result from the Text Translation API. This will contain the translated text.</dd>
+    </dl>
+
+    <h3>Details</h3>
+    <p>This node uses the JigsawStack Text Translation API to translate text. You must provide the text and a target language.</p>
+    <p>For more details on the API, see the <a href="https://jigsawstack.com/docs/translate/text" target="_blank">JigsawStack Text Translation documentation</a>.</p>
+</script>

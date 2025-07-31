@@ -1,0 +1,115 @@
+<!--
+  Copyright JS Foundation and other contributors, http://js.foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/html" data-template-name="jigsawstack-ai-scrape">
+    <div class="form-row">
+        <label for="node-input-jigsawstackConfig"><i class="fa fa-cog"></i> JigsawStack Config</label>
+        <input type="text" id="node-input-jigsawstackConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-url"><i class="fa fa-globe"></i> URL</label>
+        <input type="text" id="node-input-url" placeholder="Enter URL to scrape or provide in msg.payload.url">
+    </div>
+    <div class="form-row">
+        <label for="node-input-element_prompts"><i class="fa fa-comment-o"></i> Element Prompts</label>
+        <textarea id="node-input-element_prompts" rows="5" style="width:100%" placeholder="Enter comma-separated prompts for what to extract"></textarea>
+    </div>
+    <div class="form-row">
+        <label for="node-input-selectors"><i class="fa fa-css3"></i> Selectors</label>
+        <textarea id="node-input-selectors" rows="5" style="width:100%" placeholder="Enter comma-separated CSS selectors to extract"></textarea>
+    </div>
+    <div class="form-row">
+        <label for="node-input-root_element_selector"><i class="fa fa-crosshairs"></i> Root Element Selector</label>
+        <input type="text" id="node-input-root_element_selector" placeholder="Enter a root element selector to limit scraping scope">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="jigsawstack-ai-scrape">
+    <p>Scrapes a website using AI to extract structured data.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>url
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The URL of the website to scrape. Can be overridden by <code>msg.payload.url</code>.</dd>
+        <dt>element_prompts
+            <span class="property-type">array of strings</span>
+        </dt>
+        <dd> An array of prompts describing the data to extract from each element. Can be overridden by <code>msg.payload.element_prompts</code>.</dd>
+        <dt class="optional">selectors
+            <span class="property-type">array of strings</span>
+        </dt>
+        <dd> An array of CSS selectors to extract. Can be overridden by <code>msg.payload.selectors</code>.</dd>
+        <dt class="optional">root_element_selector
+            <span class="property-type">string</span>
+        </dt>
+        <dd> A CSS selector for a root element to limit the scope of scraping. Can be overridden by <code>msg.payload.root_element_selector</code>.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">object</span>
+        </dt>
+        <dd>The result from the AI Scrape API. Typically contains the extracted data in a structured format.</dd>
+    </dl>
+
+    <h3>Details</h3>
+    <p>This node uses the JigsawStack AI Scrape API to extract information from a webpage. You must provide a URL and a set of element prompts. The prompts guide the AI on what kind of information to look for within the page.</p>
+    <p>For more details on the API, see the <a href="https://jigsawstack.com/docs/web/ai-scrape" target="_blank">JigsawStack AI Scrape documentation</a>.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('jigsawstack-ai-scrape',{
+        category: 'Jigsaw',
+        color: '#F53E34',
+        defaults: {
+            name: {value:""},
+            jigsawstackConfig: {type:"jigsawstack-config", required:true},
+            url: {value:""},
+            element_prompts: {value:""},
+            selectors: {value:""},
+            root_element_selector: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "images/jigsawstack.svg",
+        label: function() {
+            return this.name||"ai-scrape";
+        },
+        oneditprepare: function() {
+            if (Array.isArray(this.element_prompts)) {
+                this.element_prompts = this.element_prompts.join(",");
+            }
+            if (Array.isArray(this.selectors)) {
+                this.selectors = this.selectors.join(",");
+            }
+        },
+        oneditsave: function() {
+            if (this.element_prompts) {
+                this.element_prompts = this.element_prompts.split(",").map(function(p) { return p.trim(); });
+            }
+            if (this.selectors) {
+                this.selectors = this.selectors.split(",").map(function(s) { return s.trim(); });
+            }
+        }
+    });
+</script>

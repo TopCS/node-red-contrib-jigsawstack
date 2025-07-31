@@ -1,0 +1,81 @@
+<!--
+  Copyright JS Foundation and other contributors, http://js.foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/html" data-template-name="jigsawstack-spell">
+    <div class="form-row">
+        <label for="node-input-jigsawstackConfig"><i class="fa fa-cog"></i> JigsawStack Config</label>
+        <input type="text" id="node-input-jigsawstackConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-text"><i class="fa fa-file-text-o"></i> Text</label>
+        <textarea id="node-input-text" rows="5" style="width:100%" placeholder="Enter text to spell check or provide in msg.payload.text"></textarea>
+    </div>
+    <div class="form-row">
+        <label for="node-input-language_code"><i class="fa fa-language"></i> Language Code</label>
+        <input type="text" id="node-input-language_code" placeholder="e.g. en, es, fr">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('jigsawstack-spell',{
+        category: 'Jigsaw',
+        color: '#F53E34',
+        defaults: {
+            name: {value:""},
+            jigsawstackConfig: {type:"jigsawstack-config", required:true},
+            text: {value:""},
+            language_code: {value:"en"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "images/jigsawstack.svg",
+        label: function() {
+            return this.name||"spell";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-help-name="jigsawstack-spell">
+    <p>Checks the spelling of text.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>text
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The text to spell check. Can be overridden by <code>msg.payload.text</code>.</dd>
+        <dt class="optional">language_code
+            <span class="property-type">string</span>
+        </dt>
+        <dd> The language code of the text. Defaults to 'en'. Can be overridden by <code>msg.payload.language_code</code>.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">object</span>
+        </dt>
+        <dd>The result from the Spell Check API. This will contain information about any spelling errors found.</dd>
+    </dl>
+
+    <h3>Details</h3>
+    <p>This node uses the JigsawStack Spell Check API to find and correct spelling mistakes in text. You must provide text to be analyzed.</p>
+    <p>For more details on the API, see the <a href="https://jigsawstack.com/docs/validate/spell-check" target="_blank">JigsawStack Spell Check documentation</a>.</p>
+</script>
