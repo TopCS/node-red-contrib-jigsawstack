@@ -22,7 +22,7 @@ This collection includes the following nodes:
 - **Text-to-SQL**: Convert text to SQL.
 - **Translate Image**: Translate text in images.
 - **Translate Text**: Translate text.
-- **VOCR**: OCR for videos.
+- **VOCR**: OCR for Images.
 - **Web Search**: Search the web.
 - **Web Suggestion**: Get web suggestions.
 
